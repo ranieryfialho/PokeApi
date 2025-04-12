@@ -1,4 +1,14 @@
-document.getElementById("search-button").addEventListener("click", async function() {
+document.getElementById("search-button").addEventListener("click", searchPokemon);
+
+// Também adiciona evento para pressionar "Enter" no campo de input
+document.getElementById("pokemon-input").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        searchPokemon();
+    }
+});
+
+// Função principal de busca
+async function searchPokemon() {
     const pokemonInput = document.getElementById("pokemon-input").value.toLowerCase();
     const pokemonInfoDiv = document.getElementById("pokemon-info");
     const pokemonImage = document.getElementById("pokemon-image");
@@ -16,7 +26,7 @@ document.getElementById("search-button").addEventListener("click", async functio
 
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonInput}`);
-        
+
         if (!response.ok) {
             throw new Error("Pokémon não encontrado.");
         }
@@ -28,7 +38,7 @@ document.getElementById("search-button").addEventListener("click", async functio
         pokemonImage.style.display = "block";
 
         // Nome e ID do Pokémon
-        pokemonName.textContent = data.name.charAt(0).toUpperCase() + data.name.slice(1); // Primeira letra maiúscula
+        pokemonName.textContent = data.name.charAt(0).toUpperCase() + data.name.slice(1);
         pokemonId.innerHTML = `<strong>ID:</strong> #${data.id}`;
 
         // Tipos do Pokémon
@@ -36,14 +46,14 @@ document.getElementById("search-button").addEventListener("click", async functio
         data.types.forEach(type => {
             typesHTML += `<span class="type-icon">${getTypeIcon(type.type.name)}</span>${type.type.name}, `;
         });
-        pokemonTypes.innerHTML = typesHTML.slice(0, -2); // Remove a última vírgula e espaço
+        pokemonTypes.innerHTML = typesHTML.slice(0, -2);
 
         // Habilidades do Pokémon
         let abilitiesHTML = "<strong>Habilidades:</strong> ";
         data.abilities.forEach(ability => {
             abilitiesHTML += `${ability.ability.name}, `;
         });
-        pokemonAbilities.innerHTML = abilitiesHTML.slice(0, -2); // Remove a última vírgula e espaço
+        pokemonAbilities.innerHTML = abilitiesHTML.slice(0, -2);
 
         // Altura e peso do Pokémon
         pokemonHeight.innerHTML = `<strong>Altura:</strong> ${data.height / 10} m`;
@@ -55,7 +65,7 @@ document.getElementById("search-button").addEventListener("click", async functio
         alert(error.message);
         pokemonInfoDiv.style.display = "none";
     }
-});
+}
 
 // Função para pegar os ícones dos tipos
 function getTypeIcon(type) {
@@ -79,5 +89,5 @@ function getTypeIcon(type) {
         "steel": "🛠️",
         "fairy": "🧚"
     };
-    return typeIcons[type] || "⚪"; // Se o tipo não tiver ícone, retorna um ícone padrão
+    return typeIcons[type] || "⚪";
 }
