@@ -1,0 +1,97 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background-image: url(seamless-pattern-pokemon-go-pokeball-background-vector-23236924.jpg);
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 320px;
+    max-width: 100%;
+    margin: 50px auto;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #ffcb05;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    width: 200px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    background-color: #ffcb05;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #ffb300;
+}
+
+.pokemon-info {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pokemon-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#pokemon-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcb05;
+}
+
+#pokemon-id {
+    font-size: 16px;
+    color: #777;
+}
+
+#pokemon-types, #pokemon-abilities, #pokemon-height, #pokemon-weight {
+    font-size: 14px;
+    color: #555;
+}
+
+.type-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    background-color: #f1f1f1;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+    color: #333;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
