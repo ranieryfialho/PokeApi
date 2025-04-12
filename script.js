@@ -21,7 +21,7 @@ document.getElementById("search-button").addEventListener("click", async functio
             throw new Error("Pokémon não encontrado.");
         }
 
-        const data = awaiAt response.json();
+        const data = await response.json();
 
         // Exibindo a imagem do Pokémon
         pokemonImage.src = data.sprites.front_default;
