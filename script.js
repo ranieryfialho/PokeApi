@@ -9,6 +9,9 @@ document.getElementById("pokemon-input").addEventListener("keypress", function(e
 
 // Função principal de busca
 async function searchPokemon() {
+    const loader = document.getElementById("loader");
+    loader.style.display = "block";
+
     const pokemonInput = document.getElementById("pokemon-input").value.toLowerCase();
     const pokemonInfoDiv = document.getElementById("pokemon-info");
     const pokemonImage = document.getElementById("pokemon-image");
@@ -21,6 +24,7 @@ async function searchPokemon() {
 
     if (!pokemonInput) {
         alert("Por favor, insira um nome ou número de Pokémon.");
+        loader.style.display = "none"; // <- Adiciona aqui também para garantir
         return;
     }
 
@@ -64,8 +68,11 @@ async function searchPokemon() {
     } catch (error) {
         alert(error.message);
         pokemonInfoDiv.style.display = "none";
+    } finally {
+        loader.style.display = "none"; // <- Correto, agora está dentro da função e dentro do bloco
     }
 }
+
 
 // Função para pegar os ícones dos tipos
 function getTypeIcon(type) {
