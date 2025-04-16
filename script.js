@@ -7,6 +7,26 @@ document.getElementById("pokemon-input").addEventListener("keypress", function(e
     }
 });
 
+async function carregarNomesDePokemon() {
+    try {
+        const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1000");
+        const data = await response.json();
+        const listaPokemon = data.results.map(p => p.name);
+
+        const datalist = document.getElementById("pokemon-suggestions");
+
+        listaPokemon.forEach(nome => {
+            const option = document.createElement("option");
+            option.value = nome;
+            datalist.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Erro ao carregar nomes de Pokémon:", error);
+    }
+}
+
+carregarNomesDePokemon();
+
 // Função principal de busca
 async function searchPokemon() {
     const loader = document.getElementById("loader");
