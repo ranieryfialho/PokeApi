@@ -3,39 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
+    <title>Pokédex Digital</title>
+    <!-- CDN do Tailwind CSS para estilização rápida -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonte Inter do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Arquivo CSS personalizado -->
     <link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Pokedex</h1>
-        <input type="text" id="pokemon-input" list="pokemon-suggestions" placeholder="Digite o nome ou número do Pokémon">
-        <datalist id="pokemon-suggestions"></datalist>
-        <button id="search-button">Buscar</button>
-
-        <div id="mensagem-inicial" class="mensagem-inicial">
-          ⚡ Bem-vindo, <strong>Treinador</strong>! <br> <br>
-          Digite o nome de um <strong>Pokémon</strong> ou o seu <strong>ID</strong> ou escolha na lista para começar.
+<body class="pokedex-body min-h-screen font-mono">
+    <div class="container mx-auto px-4 py-8 content-layer">
+        <!-- Cabeçalho da Pokédx -->
+        <div class="pokedex-gradient rounded-t-xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <!-- Botão principal da Pokédex com LED -->
+                    <div class="pokedex-button flex items-center justify-center">
+                        <div class="led-indicator"></div>
+                    </div>
+                    <h1 class="text-3xl font-bold text-white tracking-wide">POKÉDEX DIGITAL</h1>
+                </div>
+                <!-- LEDs indicadores coloridos -->
+                <div class="flex gap-3">
+                    <div class="led-indicator bg-blue-400"></div>
+                    <div class="led-indicator bg-yellow-400"></div>
+                    <div class="led-indicator bg-red-400"></div>
+                </div>
+            </div>
         </div>
 
-        <div id="loader" style="display: none;">
-            <div class="spinner"></div>
-          </div>
+        <!-- Tela Principal da Pokédex -->
+        <div class="pokedex-screen p-6 shadow-2xl">
+            <!-- Painel de Controles -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <!-- Seção de Busca -->
+                <div class="pokedex-card p-4">
+                    <h3 class="text-green-400 font-bold mb-3">BUSCAR</h3>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Nome ou número do Pokémon..." 
+                        class="w-full bg-black/50 border border-gray-600 rounded px-3 py-2 text-green-400 placeholder-gray-500 focus:outline-none focus:border-green-400"
+                    >
+                    <button onclick="app.searchPokemon()" class="w-full mt-2 bg-green-600 hover:bg-green-500 text-white py-2 rounded font-bold transition-colors">
+                        PROCURAR
+                    </button>
+                </div>
+                
+                <!-- Seção de Filtro por Tipo -->
+                <div class="pokedex-card p-4">
+                    <h3 class="text-blue-400 font-bold mb-3">FILTRAR POR TIPO</h3>
+                    <select id="typeFilter" class="custom-select w-full rounded px-3 py-2 font-bold focus:outline-none transition-all duration-300">
+                        <option value="">Todos os tipos</option>
+                        <option value="normal">Normal</option>
+                        <option value="fire">Fogo</option>
+                        <option value="water">Água</option>
+                        <option value="electric">Elétrico</option>
+                        <option value="grass">Planta</option>
+                        <option value="ice">Gelo</option>
+                        <option value="fighting">Lutador</option>
+                        <option value="poison">Veneno</option>
+                        <option value="ground">Terra</option>
+                        <option value="flying">Voador</option>
+                        <option value="psychic">Psíquico</option>
+                        <option value="bug">Inseto</option>
+                        <option value="rock">Pedra</option>
+                        <option value="ghost">Fantasma</option>
+                        <option value="dragon">Dragão</option>
+                        <option value="dark">Sombrio</option>
+                        <option value="steel">Aço</option>
+                        <option value="fairy">Fada</option>
+                    </select>
+                    <button onclick="app.filterByType()" class="w-full mt-2 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded font-bold transition-colors">
+                        FILTRAR
+                    </button>
+                </div>
+                
+                <!-- Seção de Filtro por Região -->
+                <div class="pokedex-card p-4">
+                    <h3 class="text-green-400 font-bold mb-3">FILTRAR POR REGIÃO</h3>
+                    <select id="regionFilter" class="custom-select w-full rounded px-3 py-2 font-bold focus:outline-none transition-all duration-300">
+                        <option value="">Todas as regiões</option>
+                        <option value="kanto">Kanto (1-151)</option>
+                        <option value="johto">Johto (152-251)</option>
+                        <option value="hoenn">Hoenn (252-386)</option>
+                        <option value="sinnoh">Sinnoh (387-493)</option>
+                        <option value="unova">Unova (494-649)</option>
+                        <option value="kalos">Kalos (650-721)</option>
+                        <option value="alola">Alola (722-809)</option>
+                        <option value="galar">Galar (810-905)</option>
+                        <option value="paldea">Paldea (906-1010)</option>
+                    </select>
+                    <button onclick="app.filterByRegion()" class="w-full mt-2 bg-green-600 hover:bg-green-500 text-white py-2 rounded font-bold transition-colors">
+                        FILTRAR
+                    </button>
+                </div>
+                
+                <!-- Seção de Acesso Rápido -->
+                
+            </div>
 
-        <div id="pokemon-info" class="pokemon-info">
-            <img id="pokemon-image" src="" alt="Imagem do Pokémon" style="display: none;" />
-            <p id="pokemon-name"></p>
-            <p id="pokemon-id"></p>
-            <p id="pokemon-types"></p>
-            <p id="pokemon-abilities"></p>
-            <p id="pokemon-height"></p>
-            <p id="pokemon-weight"></p>
+            <!-- Barra de Status da Pokédx -->
+            <div class="pokedex-card p-4 mb-6">
+                <div class="flex items-center justify-between text-sm">
+                    <!-- Status do sistema -->
+                    <div class="flex items-center gap-4">
+                        <span class="text-green-400">STATUS:</span>
+                        <span id="statusText" class="text-white">ONLINE</span>
+                    </div>
+                    <!-- Informações do sistema -->
+                    <div class="flex items-center gap-4 text-xs">
+                        <span class="text-gray-400">Total encontrado: <span id="totalFound" class="text-green-400">0</span></span>
+                        <span class="text-gray-400">Região: <span id="currentRegion" class="text-blue-400">KANTO</span></span>
+                        <span class="text-gray-400">Filtro: <span id="currentFilter" class="text-purple-400">TODOS</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid de Pokémon -->
+            <div id="pokemonGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <!-- Cards dos Pokémon serão renderizados aqui via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Tela de Carregamento -->
+        <div id="loading" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50" style="display: none;">
+            <div class="text-center">
+                <!-- Animação de carregamento -->
+                <div class="pokedex-button animate-bounce mb-4 mx-auto"></div>
+                <p class="text-green-400 font-bold">CARREGANDO DADOS...</p>
+                <div class="flex justify-center gap-2 mt-2">
+                    <div class="led-indicator"></div>
+                    <div class="led-indicator animation-delay-200"></div>
+                    <div class="led-indicator animation-delay-400"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Detalhes do Pokémon -->
+        <div id="pokemonModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50 p-4">
+            <div class="pokedex-card w-full max-w-4xl max-h-screen overflow-y-auto">
+                <div class="p-6">
+                    <!-- Cabeçalho do modal -->
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 id="modalTitle" class="text-2xl font-bold text-white"></h2>
+                        <button onclick="app.closeModal()" class="text-red-400 hover:text-red-300 text-2xl font-bold">×</button>
+                    </div>
+                    <!-- Conteúdo do modal será inserido aqui -->
+                    <div id="modalContent"></div>
+                    <!-- Botões de navegação -->
+                    <div class="flex justify-center gap-4 mt-6">
+                        <button onclick="app.previousPokemon()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-bold transition-colors">← ANTERIOR</button>
+                        <button onclick="app.nextPokemon()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded font-bold transition-colors">PRÓXIMO →</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <footer>
-        Desenvolvido por <a href="https://rafiweb.com.br/" target="_blank">Rafiweb</a> 🧩
-    </footer>
+    <!-- Arquivo JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
